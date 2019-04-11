@@ -1,0 +1,4 @@
+plugins:
+  aszecowka-org/test-repo-prow:
+  - cat
+  - trigger
