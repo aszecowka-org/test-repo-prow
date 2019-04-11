@@ -1,0 +1,67 @@
+presets:
+  - labels:
+      kyma-component-job: "true"
+    env:
+      - name: KYMA_JOB_TYPE
+        value: "component"
+  - labels:
+      kyma-integration-job: "true"
+    env:
+      - name: KYMA_JOB_TYPE
+        value: "integration"
+
+presubmits:
+  aszecowka-org/test-repo-prow:
+  - name: presubmit-buc
+    run_if_changed:  "^components/buc/"
+    skip_report: false
+    labels:
+      kyma-component-job: "true"
+    spec:
+      containers:
+      - image: alpine
+        command: ["/bin/date"]
+
+
+  - name: presubmit-hb
+    run_if_changed:  "^components/hb/"
+    skip_report: false
+    labels:
+      kyma-component-job: "true"
+    spec:
+      containers:
+        - image: alpine
+          command: ["/bin/date"]
+  - name: presubmit-ui-api
+    run_if_changed:  "^components/ui-api/"
+    skip_report: false
+    labels:
+      kyma-component-job: "true"
+    spec:
+      containers:
+        - image: alpine
+          command: ["/bin/date"]
+
+  - name: presubmit-integration-gke
+    run_if_changed:  "^resources/"
+    skip_report: false
+    labels:
+      kyma-integration-job: "true"
+    spec:
+      containers:
+        - image: alpine
+          command: ["/bin/date"]
+
+  - name: presubmit-integration-vm
+    run_if_changed:  "^resources/"
+    skip_report: false
+    labels:
+      kyma-integration-job: "true"
+    spec:
+      containers:
+        - image: alpine
+          command: ["/bin/date"]
+
+
+postsubmits:
+
