@@ -1,13 +1,13 @@
-waitForIntegrationTemplate: &waitForIntegrationTemplate
+componentJobWaitTemplate: &componentJobWaitTemplate
   initContainers: 
     - name: waiter
-          image: pkosiec/prow-job-waiter:0.0.1
-          serviceAccountName: job-waiter
-          env:
-            - name: REQUIRED_JOB_LABEL_KEY
-              value: "kyma-component-job"
-            - name: REQUIRED_JOB_LABEL_VALUE
-              value: "true"
+      image: pkosiec/prow-job-waiter:0.0.1
+      serviceAccountName: job-waiter
+      env:
+        - name: REQUIRED_JOB_LABEL_KEY
+          value: "kyma-component-job"
+        - name: REQUIRED_JOB_LABEL_VALUE
+          value: "true"
 
 presets:
   - labels:
@@ -59,7 +59,7 @@ presubmits:
     labels:
       kyma-integration-job: "true"
     spec:
-      <<: *waitForIntegrationTemplate
+      <<: *componentJobWaitTemplate
       containers:
         - image: alpine
           command: ["/bin/date"]
@@ -70,7 +70,7 @@ presubmits:
     labels:
       kyma-integration-job: "true"
     spec:
-      <<: *waitForIntegrationTemplate
+      <<: *componentJobWaitTemplate
       containers:
         - image: alpine
           command: ["/bin/date"]
