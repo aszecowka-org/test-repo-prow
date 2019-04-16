@@ -60,7 +60,7 @@ presubmits:
     spec:
       <<: *componentJobWaitTemplate
       containers:
-        - image: pkosiec/prow-job-waiter:0.0.1
+        - image: pkosiec/prow-job-waiter:0.0.2
           <<: *componentJobWaitContainer
           command:
             - "bash"
@@ -76,7 +76,7 @@ presubmits:
     spec:
       <<: *componentJobWaitTemplate
       containers:
-        - image: pkosiec/prow-job-waiter:0.0.1
+        - image: pkosiec/prow-job-waiter:0.0.2
           <<: *componentJobWaitContainer
           command:
             - "bash"
