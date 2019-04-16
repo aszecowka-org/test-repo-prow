@@ -12,8 +12,8 @@ metadata:
   labels:
     app: job-waiter
 rules:
-  - apiGroups: ["prow.k8s.io"]
-    resources: ["prowjobs"]
+  - apiGroups: [""]
+    resources: ["pods"]
     verbs: ["list", "get"]
 ---
 kind: ClusterRoleBinding
