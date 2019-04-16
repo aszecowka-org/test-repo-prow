@@ -1,13 +1,12 @@
 componentJobWaitTemplate: &componentJobWaitTemplate
-  initContainers: 
-    - name: waiter
-      image: pkosiec/prow-job-waiter:0.0.1
-      serviceAccountName: job-waiter
-      env:
-        - name: REQUIRED_JOB_LABEL_KEY
-          value: "kyma-component-job"
-        - name: REQUIRED_JOB_LABEL_VALUE
-          value: "true"
+  serviceAccountName: job-waiter
+
+componentJobWaitContainer: &componentJobWaitContainer
+  env:
+    - name: REQUIRED_JOB_LABEL_KEY
+      value: "kyma-component-job"
+    - name: REQUIRED_JOB_LABEL_VALUE
+      value: "true"      
 
 presets:
   - labels:
@@ -61,8 +60,13 @@ presubmits:
     spec:
       <<: *componentJobWaitTemplate
       containers:
-        - image: alpine
-          command: ["/bin/date"]
+        - image: pkosiec/prow-job-waiter:0.0.1
+          <<: *componentJobWaitContainer
+          command:
+            - "bash"
+          args:
+            - "-c"
+            - "/waiter/wait.sh && echo 'Hello world'"
 
   - name: presubmit-integration-vm
     run_if_changed:  "^resources/"
@@ -72,9 +76,13 @@ presubmits:
     spec:
       <<: *componentJobWaitTemplate
       containers:
-        - image: alpine
-          command: ["/bin/date"]
-
+        - image: pkosiec/prow-job-waiter:0.0.1
+          <<: *componentJobWaitContainer
+          command:
+            - "bash"
+          args:
+            - "-c"
+            - "/waiter/wait.sh && /bin/date"
 
 postsubmits:
 
